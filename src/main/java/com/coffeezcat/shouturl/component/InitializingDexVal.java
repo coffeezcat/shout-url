@@ -51,7 +51,7 @@ public class InitializingDexVal implements InitializingBean {
         example.setOrderByClause("dec_val desc limit 1");
          links=  linkMapper.selectByExample(example);
         if(links!=null&&links.size()>0){
-            bitAtomicArray .set(2,links.get(1).getDecVal());
+            bitAtomicArray .set(2,links.get(0).getDecVal());
         }
 
         example.clear();
