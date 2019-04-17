@@ -3,13 +3,14 @@ package com.coffeezcat.shouturl.component;
 import com.coffeezcat.shouturl.entity.Link;
 import com.coffeezcat.shouturl.entity.LinkExample;
 import com.coffeezcat.shouturl.mapper.LinkMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLongArray;
-
+@Slf4j
 @Component
 public class InitializingDexVal implements InitializingBean {
 
@@ -25,6 +26,7 @@ public class InitializingDexVal implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
 
+        log.info("开始初始化游标数据");
         LinkExample example = new LinkExample();
         //查询1位
         example.createCriteria().andDecValBetween(bitAtomicArray .get(0),LIMIT_NUM[0]);
@@ -78,6 +80,7 @@ public class InitializingDexVal implements InitializingBean {
         if(links!=null&&links.size()>0){
             bitAtomicArray .set(5,links.get(0).getDecVal());
         }
+        log.info("初始化游标数据结束");
     }
 
     /**

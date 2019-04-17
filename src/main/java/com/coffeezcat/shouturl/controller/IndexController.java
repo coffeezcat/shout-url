@@ -2,6 +2,7 @@ package com.coffeezcat.shouturl.controller;
 
 import com.coffeezcat.shouturl.entity.Link;
 import com.coffeezcat.shouturl.mapper.LinkHistoryMapper;
+import com.coffeezcat.shouturl.pojo.Result;
 import com.coffeezcat.shouturl.service.UrlCodeService;
 import com.coffeezcat.shouturl.task.LinkHistoryTask;
 import com.coffeezcat.shouturl.task.pojo.AccessInfo;
@@ -57,41 +58,61 @@ public class IndexController {
         accessInfo.setLink(link);
         accessInfo.setIp(HttpUtil.getIpAddr(request));
         accessInfo.setDevice(HttpUtil.getUserAgent(request));
+        accessInfo.setReferer(HttpUtil.getReferer(request));
         LinkHistoryTask task = new LinkHistoryTask(linkHistoryMapper,accessInfo);
         threadPoolExecutor.execute(task);
-
         //发起跳转
         response.setStatus(302);
         String linkUrl = URLDecoder.decode(link.getUrl(),"utf-8");
         response.sendRedirect(linkUrl);
-        return "";
+        return "success";
     }
 
 
     @RequestMapping("/generate")
     @ResponseBody
-    public String generateCode(String url,Integer bit)throws Exception{
+    public Result generateCode(String url,Integer bit){
         log.info("url:{}",url);
-        if(StringUtils.isEmpty(url)){
-            return "url can't be null or empty";
-        }
-        url = url.trim();
-        if(!UrlCodeUtil.isUrl(URLDecoder.decode(url,"utf-8"))){
-            return "url format is error";
-        }
-
-        if(Objects.isNull(bit)||bit <=0){
-            //默认6位
-            bit = 6;
-        }
-        String code = null;
+        Result result = new Result();
+        result.setSuccess(true);
         try {
-           code=urlCodeService.encodeUrl(url,bit);
+            url = url.trim();
+            if(StringUtils.isEmpty(url)||!UrlCodeUtil.isUrl(URLDecoder.decode(url,"utf-8"))){
+                throw new IllegalArgumentException("url can't be empty and must be http url");
+            }
+
+            if(Objects.isNull(bit)||bit <=0){
+                //默认6位
+                bit = 6;
+            }
+           String code=urlCodeService.encodeUrl(url,bit);
+           result.setUrlCode(code);
         }catch (Exception e){
-            return "generate shout url error:"+e.getMessage();
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
         }
 
+        return result;
+    }
 
-        return code;
+    /**
+     * 自定义code
+     * */
+    @RequestMapping("/c-generate")
+    @ResponseBody
+    public Result customizeGenerateCode(String url, String code){
+        Result result = new Result();
+        result.setSuccess(true);
+        try {
+            if(StringUtils.isEmpty(code)||code.length()>7||!code.startsWith("@")){
+                throw new IllegalArgumentException("code's length must be less than 7 and start at @");
+            }
+            Link link = urlCodeService.customizeUrlCode(url,code);
+            result.setUrlCode(link.getCode());
+        }catch (Exception e){
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
     }
 }

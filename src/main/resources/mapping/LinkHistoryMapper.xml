@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.coffeezcat.shouturl.mapper.LinkHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.coffeezcat.shouturl.entity.LinkHistory" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="link_id" property="linkId" jdbcType="VARCHAR" />
+    <result column="link_code" property="linkCode" jdbcType="VARCHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="c_referer" property="cReferer" jdbcType="VARCHAR" />
+    <result column="c_ip" property="cIp" jdbcType="VARCHAR" />
+    <result column="c_device" property="cDevice" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, link_id, link_code, link_url, c_referer, c_ip, c_device, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.coffeezcat.shouturl.entity.LinkHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from link_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.coffeezcat.shouturl.entity.LinkHistoryExample" >
+    delete from link_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.coffeezcat.shouturl.entity.LinkHistory" >
+    insert into link_history (id, link_id, link_code, 
+      link_url, c_referer, c_ip, 
+      c_device, create_time, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{linkId,jdbcType=VARCHAR}, #{linkCode,jdbcType=VARCHAR}, 
+      #{linkUrl,jdbcType=VARCHAR}, #{cReferer,jdbcType=VARCHAR}, #{cIp,jdbcType=VARCHAR}, 
+      #{cDevice,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.coffeezcat.shouturl.entity.LinkHistory" >
+    insert into link_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="linkId != null" >
+        link_id,
+      </if>
+      <if test="linkCode != null" >
+        link_code,
+      </if>
+      <if test="linkUrl != null" >
+        link_url,
+      </if>
+      <if test="cReferer != null" >
+        c_referer,
+      </if>
+      <if test="cIp != null" >
+        c_ip,
+      </if>
+      <if test="cDevice != null" >
+        c_device,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="linkId != null" >
+        #{linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="linkCode != null" >
+        #{linkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cReferer != null" >
+        #{cReferer,jdbcType=VARCHAR},
+      </if>
+      <if test="cIp != null" >
+        #{cIp,jdbcType=VARCHAR},
+      </if>
+      <if test="cDevice != null" >
+        #{cDevice,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.coffeezcat.shouturl.entity.LinkHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from link_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update link_history
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkId != null" >
+        link_id = #{record.linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkCode != null" >
+        link_code = #{record.linkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkUrl != null" >
+        link_url = #{record.linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cReferer != null" >
+        c_referer = #{record.cReferer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cIp != null" >
+        c_ip = #{record.cIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cDevice != null" >
+        c_device = #{record.cDevice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update link_history
+    set id = #{record.id,jdbcType=VARCHAR},
+      link_id = #{record.linkId,jdbcType=VARCHAR},
+      link_code = #{record.linkCode,jdbcType=VARCHAR},
+      link_url = #{record.linkUrl,jdbcType=VARCHAR},
+      c_referer = #{record.cReferer,jdbcType=VARCHAR},
+      c_ip = #{record.cIp,jdbcType=VARCHAR},
+      c_device = #{record.cDevice,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

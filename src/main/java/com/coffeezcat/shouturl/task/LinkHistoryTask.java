@@ -39,6 +39,7 @@ public class LinkHistoryTask implements Runnable{
             linkHistory.setLinkCode(link.getCode());
             linkHistory.setcIp(accessInfo.getIp());
             linkHistory.setcDevice(accessInfo.getDevice());
+            linkHistory.setcReferer(accessInfo.getReferer());
             linkHistory.setCreateTime(new Date());
             linkHistory.setUpdateTime(new Date());
             linkHistoryMapper.insertSelective(linkHistory);

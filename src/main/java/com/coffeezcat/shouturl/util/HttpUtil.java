@@ -49,4 +49,11 @@ public class HttpUtil {
     public static String getUserAgent(HttpServletRequest request){
         return request.getHeader("User-Agent");
     }
+
+    /**
+     * 获取请求referer
+     * */
+    public static String getReferer(HttpServletRequest request){
+        return request.getHeader("referer");
+    }
 }

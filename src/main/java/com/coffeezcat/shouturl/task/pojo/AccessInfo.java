@@ -12,6 +12,7 @@ public class AccessInfo {
     private Link link;
     private String ip;
     private String device;
+    private String referer;
 
     public Link getLink() {
         return link;
@@ -35,5 +36,13 @@ public class AccessInfo {
 
     public void setDevice(String device) {
         this.device = device;
+    }
+
+    public String getReferer() {
+        return referer;
+    }
+
+    public void setReferer(String referer) {
+        this.referer = referer;
     }
 }
