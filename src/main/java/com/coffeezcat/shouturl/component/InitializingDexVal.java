@@ -7,9 +7,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicLongArray;
 
 @Component
@@ -93,5 +91,12 @@ public class InitializingDexVal implements InitializingBean {
         return bitAtomicArray.get(bit-1);
     }
 
+    /**
+     * longArray减去1
+     * */
+    public long decDexVal(int bit){
+        bitAtomicArray.decrementAndGet(bit-1);
+        return bitAtomicArray.get(bit-1);
+    }
 
 }

@@ -35,7 +35,7 @@ public class NumberUtil {
      *十进制转给定格式的字符串
      * @param number 要转换的十进制数
      */
-    public static String dexToNexCode(int number){
+    public static String dexToNexCode(long number){
         StringBuilder sb = new StringBuilder();
         List<Integer> bits = dexToNex(number,LENGTH);
         for (int i: bits) {
