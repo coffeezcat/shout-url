@@ -1,5 +1,5 @@
 
-##短网址服务
+## 短网址服务
 ### 短网址服务访问 
 >1.localhost:port/{code} 短链接服务地址<br/>
 >2.localhost:port/generate?url=xx&bit=x 短链接生成地址,url要decode提交,代表要生成的地址,bit代表要生成的位数(1<=bit<=6)<br/>
